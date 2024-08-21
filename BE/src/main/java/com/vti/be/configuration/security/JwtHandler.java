@@ -6,7 +6,6 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-
 import java.util.Date;
 
 @Component
@@ -22,13 +21,14 @@ public class JwtHandler {
     }
 
 
-    public String generateToken(String username) {
+    public String generateToken(String username, String role) {
         long currenTimeMilis = System.currentTimeMillis();
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuer("com.vti")
                 .setIssuedAt(new Date(currenTimeMilis))
                 .setExpiration(new Date(currenTimeMilis + expirationInMs))
+                .claim("role", role)
                 .signWith(SignatureAlgorithm.HS512, secretKey)
                 .compact();
     }

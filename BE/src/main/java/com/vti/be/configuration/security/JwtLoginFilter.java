@@ -11,12 +11,15 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Component
@@ -50,8 +53,22 @@ public class JwtLoginFilter extends AbstractAuthenticationProcessingFilter {
             HttpServletResponse response,
             FilterChain chain, Authentication authResult)
             throws IOException, ServletException {
-        String token = jwtHandler.generateToken(authResult.getName());
-        response.addHeader(HttpHeaders.AUTHORIZATION, "Bearer " + token); // Thay doi neu muon tra ve o body
+
+        // Extract the user's roles (authorities)
+        Collection<? extends GrantedAuthority> authorities = authResult.getAuthorities();
+
+        // Assuming you have a single role, extract it
+        String role = authorities.stream()
+                .map(GrantedAuthority::getAuthority)
+                .findFirst() // Get the first (and only) role
+                .orElseThrow(() -> new RuntimeException("User has no roles assigned"));
+
+
+        // Generate the JWT token with the username and role
+        String token = jwtHandler.generateToken(authResult.getName(), role);
+
+        // Add the token to the response header
+        response.addHeader(HttpHeaders.AUTHORIZATION, "Bearer " + token);
     }
 
 }
