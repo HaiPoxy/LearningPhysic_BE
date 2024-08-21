@@ -21,7 +21,7 @@ public class JwtHandler {
     }
 
 
-    public String generateToken(String username, String role) {
+    public  String generateToken(String username, String role) {
         long currenTimeMilis = System.currentTimeMillis();
         return Jwts.builder()
                 .setSubject(username)
