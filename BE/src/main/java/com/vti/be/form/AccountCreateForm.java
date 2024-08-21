@@ -21,8 +21,7 @@ public class AccountCreateForm {
     private String email;
     @NotBlank(message = "{AccountForm.password.NotBlank }")
     private String password;
-    private String firstName;
-    private String lastName;
+    private String fullName;
     @NotEmpty(message = "Role is not Blank!")
     private Account.Role role;
     @Pattern(regexp = "ENABLED|BLOCKED|DENIED", message = "Role is Invalid!")
