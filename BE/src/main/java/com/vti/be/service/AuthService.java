@@ -33,8 +33,8 @@ public class AuthService implements IAuthService, UserDetailsService {
     private final JavaMailSender mailSender;
 
     private final IChangePasswordRequestRepository changePasswordRepository ;
-    @Value("${server.domain}")
-    private String serverDomain;
+    @Value("${frontend.domain}")
+    private String frontendDomain;
 
     @Autowired
     public AuthService(IAuthRepository repository, ModelMapper mapper, PasswordEncoder encoder, JavaMailSender mailSender, IChangePasswordRequestRepository changePasswordRequestRepository) {
@@ -79,7 +79,7 @@ public class AuthService implements IAuthService, UserDetailsService {
     public ResponseEntity<String> sendToEmail(String email) {
         if (repository.existsByEmail(email)) {
             String token = UUID.randomUUID().toString() + ":" + email;
-            String resetLink = serverDomain + "/reset-password?token=" + token;
+            String resetLink = frontendDomain + "/reset-password?token=" + token;
 
             try {
                 SimpleMailMessage mailMessage = new SimpleMailMessage();
