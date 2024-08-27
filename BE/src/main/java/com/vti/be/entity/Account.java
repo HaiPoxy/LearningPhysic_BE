@@ -3,6 +3,8 @@ package com.vti.be.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Entity
 @Data
 public class Account {
@@ -10,13 +12,10 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id ;
 
-    @Column
     private String email ;
 
-    @Column
     private String password ;
 
-    @Column
     private Role role ;
 
     public enum Role {
@@ -24,6 +23,8 @@ public class Account {
         MANAGER,
         USER
     }
-    @Column
     private String status;
+
+    @OneToMany(mappedBy = "account")
+    private List<Post> posts ;
 }

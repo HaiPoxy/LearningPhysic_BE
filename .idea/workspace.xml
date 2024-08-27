@@ -1,21 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2fc0cf5f-7267-49e9-9104-37e2262665d6" name="Changes" comment="" />
+    <list default="true" id="2fc0cf5f-7267-49e9-9104-37e2262665d6" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/BE/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BE/mvnw" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BE/mvnw.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BE/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/BeApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/configuration/ModelMapperConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/configuration/security/JwtAuthenticationFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/configuration/security/JwtHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/configuration/security/JwtLoginFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/configuration/security/SecurityConfiguration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/controller/AccountController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/controller/AuthController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/dto/AccountDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/entity/Account.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/entity/ChangePasswordRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/form/AccountCreateForm.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/form/AccountFilterForm.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/form/AuthRegisterForm.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/form/ChangePasswordForm.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/repository/IAccountRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/repository/IAuthRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/repository/IChangePasswordRequestRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/service/AccountService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/service/AuthService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/service/IAccountService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/service/IAuthService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/specification/AccountSpecification.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/validation/AccountIdExist.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/validation/AccountIdExistValidator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/validation/EmailNotExist.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/validation/EmailNotExistValidator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BE/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BE/src/test/java/com/vti/be/BeApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/BE.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/BE.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/BE" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 2
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
   <component name="ProjectId" id="2kuVpXGBMzBM11zi1jbQ7SYjjSU" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -26,7 +63,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "feature/namlh",
+    "git-widget-placeholder": "<unknown>",
     "last_opened_file_path": "/Users/ast/Documents/VTI/team3/project/BE",
     "vue.rearranger.settings.migration": "true"
   }
@@ -40,6 +77,8 @@
       <option name="presentableId" value="Default" />
       <updated>1724133631925</updated>
       <workItem from="1724133633101" duration="17000" />
+      <workItem from="1724762877939" duration="9000" />
+      <workItem from="1724762915302" duration="102000" />
     </task>
     <servers />
   </component>
