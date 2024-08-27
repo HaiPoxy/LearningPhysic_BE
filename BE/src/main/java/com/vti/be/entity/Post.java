@@ -19,6 +19,8 @@ public class Post {
 
     private String content ;
 
+    private int numberLike ;
+
     private postStatus status ;
 
     @ManyToOne
@@ -27,6 +29,7 @@ public class Post {
 
     @OneToMany(mappedBy = "post")
     private List<Comment> comments;
+
 
     @CreationTimestamp
     private LocalDateTime createdAt ;
@@ -39,4 +42,7 @@ public class Post {
         DENIED,
         HIDE
     }
+
+    @OneToMany(mappedBy = "post")
+    private List<FavoritePost> favoritePosts;
 }
