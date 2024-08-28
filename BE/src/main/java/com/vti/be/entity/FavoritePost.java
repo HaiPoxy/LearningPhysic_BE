@@ -17,4 +17,6 @@ public class FavoritePost {
     @ManyToOne
     @JoinColumn(name = "post_id", referencedColumnName = "id")
     private Post post ;
+
+    private String status;
 }
