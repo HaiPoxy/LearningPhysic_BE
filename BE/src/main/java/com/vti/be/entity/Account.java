@@ -30,4 +30,11 @@ public class Account {
 
     @OneToMany(mappedBy = "account")
     private List<FavoritePost> favoritePosts;
+
+    @OneToMany(mappedBy = "account")
+    private List<CartItem> cartItems;
+
+    @OneToMany(mappedBy = "account")
+    private List<Order> orders ;
+
 }
