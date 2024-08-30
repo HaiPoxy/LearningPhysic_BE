@@ -11,6 +11,7 @@ public class AccountDto {
     private String email ;
     private String fullName;
     private String password ;
+    private String avatarLink ;
     private String role ;
 
 }
