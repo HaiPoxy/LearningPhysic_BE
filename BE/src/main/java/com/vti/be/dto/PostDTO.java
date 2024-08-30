@@ -11,6 +11,7 @@ public class PostDTO {
     private String title;
     private String content;
     private int numberLike;
+    private int grade ;
     private String status;
     private Integer accountId;
     private String email ;

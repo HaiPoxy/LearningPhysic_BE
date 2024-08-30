@@ -22,6 +22,8 @@ public class Post {
 
     private int numberLike ;
 
+    private int grade ;
+
     private postStatus status ;
 
     @ManyToOne

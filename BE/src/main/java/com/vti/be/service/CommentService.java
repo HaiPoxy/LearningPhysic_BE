@@ -5,6 +5,7 @@ import com.vti.be.entity.Comment;
 import com.vti.be.entity.Post;
 import com.vti.be.form.CommentCreateForm;
 import com.vti.be.repository.CommentRepository;
+import com.vti.be.repository.IAccountRepository;
 import com.vti.be.repository.PostRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,8 @@ public class CommentService implements ICommentService {
 
     @Autowired
     private PostRepository postRepository ;
+    @Autowired
+    private IAccountRepository accountRepository ;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -77,6 +80,7 @@ public class CommentService implements ICommentService {
     public CommentDTO createComment(CommentCreateForm commentDTO) {
         // Convert CommentDTO to Comment entity
         Comment comment = modelMapper.map(commentDTO, Comment.class);
+        comment.setAccount(accountRepository.findById(commentDTO.getAccountId()).get());
         // If parentCommentId is provided, find the parent comment and set it
         if (commentDTO.getParentCommentId() != null) {
             Optional<Comment> parentCommentOptional = commentRepository.findById(commentDTO.getParentCommentId());
@@ -116,6 +120,8 @@ public class CommentService implements ICommentService {
         if (createdComment.getCommentParent() != null) {
             savedComment.setParentCommentId(createdComment.getCommentParent().getId());
         }
+        savedComment.setAccountId(createdComment.getAccount().getId());
+        savedComment.setFullName(createdComment.getAccount().getFullName());
         return savedComment ;
     }
 
