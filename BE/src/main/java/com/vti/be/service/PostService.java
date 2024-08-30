@@ -73,6 +73,8 @@ public class PostService implements IPostService {
                                 CommentDTO commentchilddto =   modelMapper.map(commentchild, CommentDTO.class);
                                 commentchilddto.setParentCommentId(commentchild.getCommentParent().getId());
                                 commentchilddto.setParentCommentId(comment.getPost().getId());
+                                commentchilddto.setAccountId(commentchild.getAccount().getId());
+                                commentchilddto.setFullName(commentchild.getAccount().getFullName());
                                 return commentchilddto ;
                             })
                             .collect(Collectors.toList());
@@ -83,6 +85,8 @@ public class PostService implements IPostService {
                 if (comment.getPost() != null) {
                     commentDTO.setPostId(comment.getPost().getId());
                 }
+                commentDTO.setAccountId(comment.getAccount().getId());
+                commentDTO.setFullName(comment.getAccount().getFullName());
                 return commentDTO;
             }).toList());
             return  postDTO ;

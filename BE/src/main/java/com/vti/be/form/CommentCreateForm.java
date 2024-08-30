@@ -1,5 +1,6 @@
 package com.vti.be.form;
 
+import com.vti.be.entity.Account;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -14,4 +15,6 @@ public class CommentCreateForm {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private String status;
+    private Integer accountId ;
+
 }
