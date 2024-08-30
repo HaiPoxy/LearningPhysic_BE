@@ -47,18 +47,26 @@ public class CommentService implements ICommentService {
         return filteredPage.map(comment -> {
             CommentDTO commentDTO = modelMapper.map(comment, CommentDTO.class);
 
+
+            if (comment.getPost() != null) {
+                commentDTO.setPostId(comment.getPost().getId());
+            }
             // Recursively map child comments to CommentDTOs
             if (comment.getChildComments() != null && !comment.getChildComments().isEmpty()) {
                 List<CommentDTO> childCommentDTOs = comment.getChildComments().stream()
-                        .map(commentchild ->  modelMapper.map(commentchild, CommentDTO.class))
+                        .map(commentchild ->  {
+                            CommentDTO commentchilddto =   modelMapper.map(commentchild, CommentDTO.class);
+                            commentchilddto.setParentCommentId(commentchild.getCommentParent().getId());
+
+                            commentchilddto.setPostId(comment.getPost().getId());
+                            return commentchilddto ;
+                        })
                         .collect(Collectors.toList());
                 commentDTO.setChildComments(childCommentDTOs);
             }
 //            else commentDTO.setChildComments(new ArrayList<CommentDTO>());
             // Set post ID if available
-            if (comment.getPost() != null && comment.getPost().getId() != null) {
-                commentDTO.setPostId(comment.getPost().getId());
-            }
+
             return commentDTO;
         });
     }
@@ -69,7 +77,6 @@ public class CommentService implements ICommentService {
     public CommentDTO createComment(CommentCreateForm commentDTO) {
         // Convert CommentDTO to Comment entity
         Comment comment = modelMapper.map(commentDTO, Comment.class);
-
         // If parentCommentId is provided, find the parent comment and set it
         if (commentDTO.getParentCommentId() != null) {
             Optional<Comment> parentCommentOptional = commentRepository.findById(commentDTO.getParentCommentId());
@@ -86,7 +93,6 @@ public class CommentService implements ICommentService {
                 throw new IllegalArgumentException("Parent comment with ID " + commentDTO.getParentCommentId() + " not found.");
             }
         }
-        else
         if(commentDTO.getPostId() != null ) {
             Optional<Post> post = postRepository.findById(commentDTO.getPostId()) ;
             if(post.isPresent()) {
@@ -106,6 +112,9 @@ public class CommentService implements ICommentService {
         CommentDTO savedComment = modelMapper.map(createdComment, CommentDTO.class);
         if (createdComment.getPost() != null && createdComment.getPost().getId() != null) {
             savedComment.setPostId(createdComment.getPost().getId());
+        }
+        if (createdComment.getCommentParent() != null) {
+            savedComment.setParentCommentId(createdComment.getCommentParent().getId());
         }
         return savedComment ;
     }

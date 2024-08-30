@@ -80,7 +80,7 @@ public class PostService implements IPostService {
                 }
 //            else commentDTO.setChildComments(new ArrayList<CommentDTO>());
                 // Set post ID if available
-                if (comment.getPost() != null && comment.getPost().getId() != null) {
+                if (comment.getPost() != null) {
                     commentDTO.setPostId(comment.getPost().getId());
                 }
                 return commentDTO;
