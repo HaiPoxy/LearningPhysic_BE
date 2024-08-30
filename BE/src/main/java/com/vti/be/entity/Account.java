@@ -20,6 +20,8 @@ public class Account {
 
     private Role role ;
 
+    private String avatarLink ;
+
     public enum Role {
         ADMIN,
         MANAGER,

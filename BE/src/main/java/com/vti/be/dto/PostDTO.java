@@ -16,6 +16,7 @@ public class PostDTO {
     private Integer accountId;
     private String email ;
     private String fullName;
+    private String avatarLink ;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private List<CommentDTO> comments;

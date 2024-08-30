@@ -61,6 +61,7 @@ public class PostService implements IPostService {
             postDTO.setAccountId(post.getAccount().getId());
             postDTO.setFullName(post.getAccount().getFullName());
             postDTO.setEmail(post.getAccount().getEmail());
+            postDTO.setAvatarLink(post.getAccount().getAvatarLink());
 
             postDTO.setComments(post.getComments().stream().map(comment -> {
                 CommentDTO commentDTO = modelMapper.map(comment, CommentDTO.class);
