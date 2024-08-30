@@ -6,6 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,13 +24,13 @@ public class Comment {
     private Comment commentParent;
 
     @OneToMany(mappedBy = "commentParent", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Comment> childComments;
+    private List<Comment> childComments = new ArrayList<>();
 
     @CreationTimestamp
     private LocalDateTime createdAt ;
 
     @UpdateTimestamp
-    private LocalDateTime updateAt ;
+    private LocalDateTime updatedAt;
 
     @ManyToOne
     @JoinColumn(name = "post_id" , referencedColumnName = "id")
@@ -52,4 +53,8 @@ public class Comment {
             }
         }
     }
+    @ManyToOne
+    @JoinColumn(name = "account_id", referencedColumnName = "id")
+    private Account account ;
+
 }

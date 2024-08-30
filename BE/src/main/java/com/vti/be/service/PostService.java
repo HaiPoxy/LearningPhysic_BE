@@ -2,13 +2,18 @@ package com.vti.be.service;
 
 import com.vti.be.dto.CommentDTO;
 import com.vti.be.dto.PostDTO;
+import com.vti.be.entity.Account;
 import com.vti.be.entity.Post;
+import com.vti.be.repository.IAccountRepository;
 import com.vti.be.repository.PostRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -18,30 +23,86 @@ public class PostService implements IPostService {
     @Autowired
     private PostRepository postRepository;
 
-    @Override
-    public Page<PostDTO> getAllPosts(Pageable pageable) {
-        return postRepository.findAll(pageable)
-                .map(this::convertToDTO);
-    }
+    @Autowired
+    private IAccountRepository accountRepository;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
     public PostDTO createPost(PostDTO postDTO) {
-        Post post = convertToEntity(postDTO);
+        Post post = modelMapper.map(postDTO, Post.class);
+
+        if (postDTO.getAccountId() != null) {
+            Account account = accountRepository.findById(postDTO.getAccountId())
+                    .orElseThrow(() -> new RuntimeException("Account with id " + postDTO.getAccountId() + " not found."));
+            post.setAccount(account);
+        }
+
+        post.setCreatedAt(LocalDateTime.now());
+
         Post savedPost = postRepository.save(post);
-        return convertToDTO(savedPost);
+
+        PostDTO postSaved = modelMapper.map(savedPost, PostDTO.class);
+        postSaved.setAccountId(savedPost.getAccount().getId());
+        postSaved.setEmail(savedPost.getAccount().getEmail());
+        postSaved.setFullName(savedPost.getAccount().getFullName());
+        postSaved.setComments(savedPost.getAccount().getComments().stream().map(comment -> modelMapper.map(comment, CommentDTO.class)).toList());
+        return postSaved ;
+    }
+
+    @Override
+    public Page<PostDTO> getAllPosts(Pageable pageable) {
+        Page<Post> postPage = postRepository.findAll(pageable);
+
+        return postPage.map(post -> {
+            PostDTO postDTO = modelMapper.map(post, PostDTO.class) ;
+
+            postDTO.setAccountId(post.getAccount().getId());
+            postDTO.setFullName(post.getAccount().getFullName());
+            postDTO.setEmail(post.getAccount().getEmail());
+
+            postDTO.setComments(post.getComments().stream().map(comment -> {
+                CommentDTO commentDTO = modelMapper.map(comment, CommentDTO.class);
+
+
+                // Recursively map child comments to CommentDTOs
+                if (comment.getChildComments() != null && !comment.getChildComments().isEmpty()) {
+                    List<CommentDTO> childCommentDTOs = comment.getChildComments().stream()
+                            .map(commentchild ->  {
+                                CommentDTO commentchilddto =   modelMapper.map(commentchild, CommentDTO.class);
+                                commentchilddto.setParentCommentId(commentchild.getCommentParent().getId());
+                                commentchilddto.setParentCommentId(comment.getPost().getId());
+                                return commentchilddto ;
+                            })
+                            .collect(Collectors.toList());
+                    commentDTO.setChildComments(childCommentDTOs);
+                }
+//            else commentDTO.setChildComments(new ArrayList<CommentDTO>());
+                // Set post ID if available
+                if (comment.getPost() != null && comment.getPost().getId() != null) {
+                    commentDTO.setPostId(comment.getPost().getId());
+                }
+                return commentDTO;
+            }).toList());
+            return  postDTO ;
+        });
     }
 
     @Override
     public PostDTO updatePost(Integer id, PostDTO postDTO) {
-        Optional<Post> existingPost = postRepository.findById(id);
-        if (existingPost.isPresent()) {
-            Post post = existingPost.get();
+        Optional<Post> existingPostOpt = postRepository.findById(id);
+        if (existingPostOpt.isPresent()) {
+            Post post = existingPostOpt.get();
+            // Update only the fields that can be changed
             post.setTitle(postDTO.getTitle());
             post.setContent(postDTO.getContent());
             post.setNumberLike(postDTO.getNumberLike());
             post.setStatus(Post.postStatus.valueOf(postDTO.getStatus()));
+            // You might want to update other fields as well
+
             Post updatedPost = postRepository.save(post);
-            return convertToDTO(updatedPost);
+            return modelMapper.map(updatedPost, PostDTO.class);
         } else {
             throw new RuntimeException("Post with id " + id + " not found.");
         }
@@ -49,17 +110,12 @@ public class PostService implements IPostService {
 
     @Override
     public void deletePostById(Integer id) {
-        if (postRepository.existsById(id)) {
-            postRepository.deleteById(id);
-        } else {
-            throw new RuntimeException("Post with id " + id + " not found.");
-        }
+        postRepository.deleteById(id);
     }
 
     @Override
     public Optional<PostDTO> findPostById(Integer id) {
         return postRepository.findById(id)
-                .map(this::convertToDTO);
+                .map(post -> modelMapper.map(post, PostDTO.class));
     }
-
 }

@@ -12,6 +12,8 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id ;
 
+    private String fullName;
+
     private String email ;
 
     private String password ;
@@ -37,4 +39,6 @@ public class Account {
     @OneToMany(mappedBy = "account")
     private List<Order> orders ;
 
+    @OneToMany(mappedBy = "account")
+    private List<Comment> comments;
 }

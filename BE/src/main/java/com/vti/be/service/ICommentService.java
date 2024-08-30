@@ -1,19 +1,20 @@
 package com.vti.be.service;
 
-import com.vti.be.entity.Comment;
+import com.vti.be.dto.CommentDTO;
+import com.vti.be.form.CommentCreateForm;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.Optional;
 
 public interface ICommentService {
-    Page<Comment> getAllComments(Pageable pageable);
+    Page<CommentDTO> getAllComments(Pageable pageable);
 
-    Comment createComment(Comment comment);
+    CommentDTO createComment(CommentCreateForm commentDTO);
 
-    Comment updateComment(Integer id, Comment updatedComment) throws Exception;
+    CommentDTO updateComment(Integer id, CommentDTO updatedCommentDTO) throws Exception;
 
     void deleteCommentById(Integer id) throws Exception;
 
-    Optional<Comment> findCommentById(Integer id);
+    Optional<CommentDTO> findCommentById(Integer id);
 }

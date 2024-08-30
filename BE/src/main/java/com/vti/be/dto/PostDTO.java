@@ -13,6 +13,8 @@ public class PostDTO {
     private int numberLike;
     private String status;
     private Integer accountId;
+    private String email ;
+    private String fullName;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private List<CommentDTO> comments;

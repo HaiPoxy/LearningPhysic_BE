@@ -1,11 +1,11 @@
 package com.vti.be.service;
 
-
 import com.vti.be.dto.FavoritePostDTO;
 import com.vti.be.entity.FavoritePost;
 import com.vti.be.repository.FavoritePostRepository;
 import com.vti.be.repository.IAccountRepository;
 import com.vti.be.repository.PostRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +22,9 @@ public class FavoritePostService implements IFavoritePostService {
 
     @Autowired
     private PostRepository postRepository;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
     public FavoritePostDTO createFavoritePost(FavoritePostDTO favoritePostDTO) {
@@ -62,15 +65,11 @@ public class FavoritePostService implements IFavoritePostService {
     }
 
     private FavoritePostDTO convertToDTO(FavoritePost favoritePost) {
-        FavoritePostDTO dto = new FavoritePostDTO();
-        dto.setId(favoritePost.getId());
-        dto.setAccountId(favoritePost.getAccount().getId());
-        dto.setPostId(favoritePost.getPost().getId());
-        return dto;
+        return modelMapper.map(favoritePost, FavoritePostDTO.class);
     }
 
     private FavoritePost convertToEntity(FavoritePostDTO favoritePostDTO) {
-        FavoritePost favoritePost = new FavoritePost();
+        FavoritePost favoritePost = modelMapper.map(favoritePostDTO, FavoritePost.class);
         favoritePost.setAccount(accountRepository.findById(favoritePostDTO.getAccountId())
                 .orElseThrow(() -> new RuntimeException("Account not found")));
         favoritePost.setPost(postRepository.findById(favoritePostDTO.getPostId())

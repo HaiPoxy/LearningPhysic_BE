@@ -9,8 +9,7 @@ import lombok.Setter;
 @Setter
 public class AuthRegisterForm {
     private String email;
+    private String fullName;
     private String password;
-    private String firstName;
-    private String lastName;
     private Account.Role role;
 }
