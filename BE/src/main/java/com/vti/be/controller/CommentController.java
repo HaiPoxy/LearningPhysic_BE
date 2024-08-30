@@ -1,7 +1,7 @@
 package com.vti.be.controller;
 
-
-import com.vti.be.entity.Comment;
+import com.vti.be.dto.CommentDTO;
+import com.vti.be.form.CommentCreateForm;
 import com.vti.be.service.ICommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,26 +22,26 @@ public class CommentController {
     private ICommentService commentService;
 
     @GetMapping
-    public ResponseEntity<Page<Comment>> getAllComments(
+    public ResponseEntity<Page<CommentDTO>> getAllComments(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "createdAt") String sortBy,
             @RequestParam(defaultValue = "desc") String sortDir) {
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
         Pageable pageable = PageRequest.of(page, size, sort);
-        Page<Comment> comments = commentService.getAllComments(pageable);
+        Page<CommentDTO> comments = commentService.getAllComments(pageable);
         return new ResponseEntity<>(comments, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Comment> createComment(@RequestBody Comment comment) {
-        Comment createdComment = commentService.createComment(comment);
+    public ResponseEntity<CommentDTO> createComment(@RequestBody CommentCreateForm commentDTO) {
+        CommentDTO createdComment = commentService.createComment(commentDTO);
         return new ResponseEntity<>(createdComment, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Comment> updateComment(@PathVariable Integer id, @RequestBody Comment comment) throws Exception {
-        Comment updatedComment = commentService.updateComment(id, comment);
+    public ResponseEntity<CommentDTO> updateComment(@PathVariable Integer id, @RequestBody CommentDTO commentDTO) throws Exception {
+        CommentDTO updatedComment = commentService.updateComment(id, commentDTO);
         return new ResponseEntity<>(updatedComment, HttpStatus.OK);
     }
 
@@ -52,9 +52,9 @@ public class CommentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Comment> getCommentById(@PathVariable Integer id) {
-        Optional<Comment> comment = commentService.findCommentById(id);
-        return comment.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+    public ResponseEntity<CommentDTO> getCommentById(@PathVariable Integer id) {
+        Optional<CommentDTO> commentDTO = commentService.findCommentById(id);
+        return commentDTO.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 }
