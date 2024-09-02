@@ -43,4 +43,8 @@ public class Account {
 
     @OneToMany(mappedBy = "account")
     private List<Comment> comments;
+
+    @OneToMany(mappedBy = "account")
+    private List<UserExamAttempt> userExamAttempts;
+
 }
