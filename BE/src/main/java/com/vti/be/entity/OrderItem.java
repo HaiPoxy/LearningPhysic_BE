@@ -18,6 +18,10 @@ public class OrderItem {
 //    @JoinColumn(name = "product_id")
     private Integer productId;
 
+    private Integer productName;
+
+    private String author;
+
     private Integer quantity;
 
     private String type ;
