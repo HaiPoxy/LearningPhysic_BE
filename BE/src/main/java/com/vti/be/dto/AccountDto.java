@@ -7,7 +7,6 @@ import lombok.Data;
 @Data
 public class AccountDto {
     private Integer id ;
-
     private String email ;
     private String fullName;
     private String password ;
