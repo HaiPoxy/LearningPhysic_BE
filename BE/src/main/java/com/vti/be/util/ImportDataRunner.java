@@ -86,12 +86,12 @@ public class ImportDataRunner implements CommandLineRunner {
         accountRepository.save(user);
 
         // Import data into ChangePasswordRequest table
-        ChangePasswordRequest changeRequest = new ChangePasswordRequest();
-        changeRequest.setEmail(user.getEmail());
-        changeRequest.setExpirationDate(LocalDateTime.now().plusDays(1));
-        changeRequest.setToken("sample-token");
-        changeRequest.setUsed(false);
-        changePasswordRequestRepository.save(changeRequest);
+//        ChangePasswordRequest changeRequest = new ChangePasswordRequest();
+//        changeRequest.setEmail(user.getEmail());
+//        changeRequest.setExpirationDate(LocalDateTime.now().plusDays(1));
+//        changeRequest.setToken("sample-token");
+//        changeRequest.setUsed(false);
+//        changePasswordRequestRepository.save(changeRequest);
 
         // Import data into Exam table
         Exam exam = new Exam();
