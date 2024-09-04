@@ -64,7 +64,7 @@ public class PostService implements IPostService {
             postDTO.setAvatarLink(post.getAccount().getAvatarLink());
 
             postDTO.setComments(post.getComments().stream()
-                    .filter(comment -> comment.getCommentParent() == null) 
+                    .filter(comment -> comment.getCommentParent() == null)
                     .map(comment -> {
                 CommentDTO commentDTO = modelMapper.map(comment, CommentDTO.class);
 
