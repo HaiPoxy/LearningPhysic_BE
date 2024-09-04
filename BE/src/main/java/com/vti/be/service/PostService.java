@@ -63,9 +63,10 @@ public class PostService implements IPostService {
             postDTO.setEmail(post.getAccount().getEmail());
             postDTO.setAvatarLink(post.getAccount().getAvatarLink());
 
-            postDTO.setComments(post.getComments().stream().map(comment -> {
+            postDTO.setComments(post.getComments().stream()
+                    .filter(comment -> comment.getCommentParent() == null) 
+                    .map(comment -> {
                 CommentDTO commentDTO = modelMapper.map(comment, CommentDTO.class);
-
 
                 // Recursively map child comments to CommentDTOs
                 if (comment.getChildComments() != null && !comment.getChildComments().isEmpty()) {
