@@ -78,51 +78,51 @@ public class CommentService implements ICommentService {
 
     @Override
     public CommentDTO createComment(CommentCreateForm commentDTO) {
-        // Convert CommentDTO to Comment entity
+        // Map the incoming DTO to the Comment entity
         Comment comment = modelMapper.map(commentDTO, Comment.class);
-        comment.setAccount(accountRepository.findById(commentDTO.getAccountId()).get());
-        // If parentCommentId is provided, find the parent comment and set it
+
+        // Set the account for the comment
+        comment.setAccount(accountRepository.findById(commentDTO.getAccountId()).orElseThrow(
+                () -> new IllegalArgumentException("Account with ID " + commentDTO.getAccountId() + " not found.")
+        ));
+
+        // Check if the comment has a parent comment
         if (commentDTO.getParentCommentId() != null) {
-            Optional<Comment> parentCommentOptional = commentRepository.findById(commentDTO.getParentCommentId());
-            if (parentCommentOptional.isPresent()) {
-                Comment parentComment = parentCommentOptional.get();
-                comment.setCommentParent(parentComment);
-
-                // Add the new comment to the childComments list of the parent
-                parentComment.getChildComments().add(comment);
-
-                // Save the parent comment to update the childComments list
-                commentRepository.save(parentComment);
-            } else {
-                throw new IllegalArgumentException("Parent comment with ID " + commentDTO.getParentCommentId() + " not found.");
-            }
+            // Find the parent comment and set the relationship
+            Comment parentComment = commentRepository.findById(commentDTO.getParentCommentId()).orElseThrow(
+                    () -> new IllegalArgumentException("Parent comment with ID " + commentDTO.getParentCommentId() + " not found.")
+            );
+            comment.setCommentParent(parentComment);
         }
-        if(commentDTO.getPostId() != null ) {
-            Optional<Post> post = postRepository.findById(commentDTO.getPostId()) ;
-            if(post.isPresent()) {
-                Post postSaved = post.get() ;
-               postSaved.getComments().add(comment);
 
-               postRepository.save(postSaved) ;
-               comment.setPost(postSaved);
-            }else {
-                throw new IllegalArgumentException("Post with ID " + commentDTO.getPostId()  + " not found.");
-            }
+        // Check if the comment belongs to a post
+        if (commentDTO.getPostId() != null) {
+            // Find the post and set the relationship
+            Post post = postRepository.findById(commentDTO.getPostId()).orElseThrow(
+                    () -> new IllegalArgumentException("Post with ID " + commentDTO.getPostId() + " not found.")
+            );
+            comment.setPost(post);
+        } else {
+            throw new IllegalArgumentException("Post not found.");
         }
-        // Save the new comment
+
+        // Save the comment only once after all relationships are set
         Comment createdComment = commentRepository.save(comment);
 
-        // Return the newly created comment as a CommentDTO
+        // Map the created comment back to DTO
         CommentDTO savedComment = modelMapper.map(createdComment, CommentDTO.class);
-        if (createdComment.getPost() != null && createdComment.getPost().getId() != null) {
-            savedComment.setPostId(createdComment.getPost().getId());
-        }
+        savedComment.setPostId(createdComment.getPost().getId());
+
+        // Set parent comment ID in DTO if it exists
         if (createdComment.getCommentParent() != null) {
             savedComment.setParentCommentId(createdComment.getCommentParent().getId());
         }
+
+        // Set account details in the DTO
         savedComment.setAccountId(createdComment.getAccount().getId());
         savedComment.setFullName(createdComment.getAccount().getFullName());
-        return savedComment ;
+
+        return savedComment;
     }
 
     @Override

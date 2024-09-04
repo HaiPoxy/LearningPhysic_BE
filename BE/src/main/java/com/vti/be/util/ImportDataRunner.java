@@ -71,16 +71,16 @@ public class ImportDataRunner implements CommandLineRunner {
         // Import data into Account table
         Account admin = new Account();
         admin.setFullName("Admin User");
-        admin.setEmail("admin@example.com");
-        admin.setPassword("password");
+        admin.setEmail("admin@gmail.com");
+        admin.setPassword("$2a$10$gRAt/UikvYFy4zGEx0MLFu0RiruMeGsV2b1b5ckm.wAZ8SyWKL/q2");
         admin.setRole(Account.Role.ADMIN);
         admin.setStatus("ACTIVE");
         accountRepository.save(admin);
 
         Account user = new Account();
         user.setFullName("Regular User");
-        user.setEmail("user@example.com");
-        user.setPassword("password");
+        user.setEmail("user@gmail.com");
+        user.setPassword("$2a$10$gRAt/UikvYFy4zGEx0MLFu0RiruMeGsV2b1b5ckm.wAZ8SyWKL/q2");
         user.setRole(Account.Role.USER);
         user.setStatus("ACTIVE");
         accountRepository.save(user);
