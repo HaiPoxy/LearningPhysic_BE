@@ -7,11 +7,15 @@ import com.vti.be.entity.Post;
 import com.vti.be.form.PostFilterForm;
 import com.vti.be.repository.IAccountRepository;
 import com.vti.be.repository.PostRepository;
+import com.vti.be.specification.PostSpecification;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Sort;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -55,30 +59,33 @@ public class PostService implements IPostService {
     @Override
     public Page<PostDTO> getAllPosts(PostFilterForm form, Pageable pageable) {
         Page<Post> postPage;
+        Specification<Post> spec = PostSpecification.buildSpec(form);
 
         switch (form.getType()) {
             case 0:
-                // Return all posts
+                // Return all posts without additional filtering
                 postPage = postRepository.findAll(pageable);
                 break;
             case 1:
-                // Find posts sorted by number of likes in descending order
-                postPage = postRepository.findAllByOrderByNumberLikeDesc(pageable);
+                // Find posts sorted by number of likes in descending order with grade filtering
+                Sort sort = Sort.by("numberLike").descending();
+                Pageable pageable1 = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
+                postPage = postRepository.findAll(spec, pageable1);
                 break;
             case 2:
-                // Find unanswered posts
-                postPage = postRepository.findByStatus(Post.postStatus.ACTIVE, pageable);
+                // Find unanswered posts with grade filtering and status = ACTIVE
+                postPage = postRepository.findAll(spec, pageable);
                 break;
             case 3:
-                // Find posts by the current user
-                postPage = postRepository.findByAccountId(form.getIdUser(), pageable);
+                // Find posts by the current user with grade filtering
+                postPage = postRepository.findAll(spec, pageable);
                 break;
             case 4:
-                // Find posts saved by the current user
-                postPage = postRepository.findByFavoritePostsAccountId(form.getIdUser(), pageable);
+                // Find posts saved by the current user with grade filtering
+                postPage = postRepository.findAll(spec, pageable);
                 break;
             default:
-                throw new IllegalArgumentException("Invalid type: " + form.getType());
+                postPage = postRepository.findAll(pageable);
         }
 
 
@@ -101,7 +108,7 @@ public class PostService implements IPostService {
                                     .map(commentchild -> {
                                         CommentDTO commentchilddto = modelMapper.map(commentchild, CommentDTO.class);
                                         commentchilddto.setParentCommentId(commentchild.getCommentParent().getId());
-                                        commentchilddto.setParentCommentId(comment.getPost().getId());
+                                        commentchilddto.setPostId(comment.getPost().getId());
                                         commentchilddto.setAccountId(commentchild.getAccount().getId());
                                         commentchilddto.setFullName(commentchild.getAccount().getFullName());
                                         return commentchilddto;
