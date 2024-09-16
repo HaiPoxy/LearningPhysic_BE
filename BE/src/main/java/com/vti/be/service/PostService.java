@@ -64,7 +64,7 @@ public class PostService implements IPostService {
         switch (form.getType()) {
             case 0:
                 // Return all posts without additional filtering
-                postPage = postRepository.findAll(pageable);
+                postPage = postRepository.findAll(spec,pageable);
                 break;
             case 1:
                 // Find posts sorted by number of likes in descending order with grade filtering
@@ -85,7 +85,7 @@ public class PostService implements IPostService {
                 postPage = postRepository.findAll(spec, pageable);
                 break;
             default:
-                postPage = postRepository.findAll(pageable);
+                postPage = postRepository.findAll(spec,pageable);
         }
 
 

@@ -5,6 +5,12 @@ import lombok.Data;
 @Data
 public class PostFilterForm {
     private Integer idUser;
-    private int type ; // 0 : all ; 1 câu hỏi hay ; 2 câu hỏi chă trả lời; 3 của bạn ; 4 : đã lưu
-    private int grade ;
+    private int type = 0;  // Mặc định là 0 (all)
+    private int grade = 0; // Mặc định là 0
+
+    // Bạn cũng có thể thêm constructor không tham số nếu cần
+    public PostFilterForm() {
+        this.type = 0;  // Mặc định là 0
+        this.grade = 0; // Mặc định là 0
+    }
 }

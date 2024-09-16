@@ -142,7 +142,7 @@ public class ImportDataRunner implements CommandLineRunner {
         post.setTitle("Sample Post");
         post.setContent("This is a sample post content.");
         post.setAccount(admin);
-        post.setGrade(5);
+        post.setGrade(6);
         post.setNumberLike(10);
         post.setStatus(Post.postStatus.valueOf("ACTIVE"));
         post.setCreatedAt(LocalDateTime.now());
