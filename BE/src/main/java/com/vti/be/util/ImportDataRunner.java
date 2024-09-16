@@ -1,10 +1,13 @@
 package com.vti.be.util;
 
 import com.vti.be.entity.*;
+import com.vti.be.form.AccountCreateForm;
 import com.vti.be.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -66,25 +69,27 @@ public class ImportDataRunner implements CommandLineRunner {
     @Autowired
     private CommentRepository commentRepository;
 
+    @Autowired
+    private RestTemplate restTemplate;
+
+    private final String ACCOUNT_API_URL = "http://localhost:8081/api/v1/auth/register";
+
     @Override
     public void run(String... args) throws Exception {
-        // Import data into Account table
-        Account admin = new Account();
-        admin.setFullName("Admin User");
-        admin.setEmail("admin@gmail.com");
-        admin.setPassword("$2a$10$gRAt/UikvYFy4zGEx0MLFu0RiruMeGsV2b1b5ckm.wAZ8SyWKL/q2");
-        admin.setRole(Account.Role.ADMIN);
-        admin.setStatus("ACTIVE");
-        accountRepository.save(admin);
+        // Create Account using API
+        AccountCreateForm adminForm = new AccountCreateForm();
+        adminForm.setEmail("admin@gmail.com");
+        adminForm.setPassword("admin");
+        adminForm.setRole(Account.Role.ADMIN);
+        adminForm.setStatus("ACTIVE");
+        createAccount(adminForm);
 
-        Account user = new Account();
-        user.setFullName("Regular User");
-        user.setEmail("user@gmail.com");
-        user.setPassword("$2a$10$gRAt/UikvYFy4zGEx0MLFu0RiruMeGsV2b1b5ckm.wAZ8SyWKL/q2");
-        user.setRole(Account.Role.USER);
-        user.setStatus("ACTIVE");
-        accountRepository.save(user);
-
+        AccountCreateForm userForm = new AccountCreateForm();
+        userForm.setEmail("user@gmail.com");
+        userForm.setPassword("user");
+        userForm.setRole(Account.Role.USER);
+        userForm.setStatus("ACTIVE");
+        createAccount(userForm);
         // Import data into ChangePasswordRequest table
 //        ChangePasswordRequest changeRequest = new ChangePasswordRequest();
 //        changeRequest.setEmail(user.getEmail());
@@ -92,6 +97,10 @@ public class ImportDataRunner implements CommandLineRunner {
 //        changeRequest.setToken("sample-token");
 //        changeRequest.setUsed(false);
 //        changePasswordRequestRepository.save(changeRequest);
+
+        // Fetch created accounts
+        Account admin = accountRepository.findByEmail("admin@gmail.com");
+        Account user = accountRepository.findByEmail("user@gmail.com");
 
         // Import data into Exam table
         Exam exam = new Exam();
@@ -239,5 +248,13 @@ public class ImportDataRunner implements CommandLineRunner {
         commentRepository.save(comment);
 
         System.out.println("Data import completed successfully.");
+    }
+    private void createAccount(AccountCreateForm form) {
+        ResponseEntity<Void> response = restTemplate.postForEntity(ACCOUNT_API_URL, form, Void.class);
+        if (response.getStatusCode().is2xxSuccessful()) {
+            System.out.println("Account created successfully: " + form.getEmail());
+        } else {
+            System.err.println("Failed to create account: " + form.getEmail());
+        }
     }
 }

@@ -2,7 +2,10 @@ package com.vti.be.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -21,6 +24,12 @@ public class Account {
     private Role role ;
 
     private String avatarLink ;
+
+    @CreationTimestamp
+    private LocalDateTime createdAt ;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt ;
 
     public enum Role {
         ADMIN,

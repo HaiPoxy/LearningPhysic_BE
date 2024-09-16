@@ -4,6 +4,7 @@ import com.vti.be.dto.CommentDTO;
 import com.vti.be.dto.PostDTO;
 import com.vti.be.entity.Account;
 import com.vti.be.entity.Post;
+import com.vti.be.form.PostFilterForm;
 import com.vti.be.repository.IAccountRepository;
 import com.vti.be.repository.PostRepository;
 import org.modelmapper.ModelMapper;
@@ -52,11 +53,37 @@ public class PostService implements IPostService {
     }
 
     @Override
-    public Page<PostDTO> getAllPosts(Pageable pageable) {
-        Page<Post> postPage = postRepository.findAll(pageable);
+    public Page<PostDTO> getAllPosts(PostFilterForm form, Pageable pageable) {
+        Page<Post> postPage;
+
+        switch (form.getType()) {
+            case 0:
+                // Return all posts
+                postPage = postRepository.findAll(pageable);
+                break;
+            case 1:
+                // Find posts sorted by number of likes in descending order
+                postPage = postRepository.findAllByOrderByNumberLikeDesc(pageable);
+                break;
+            case 2:
+                // Find unanswered posts
+                postPage = postRepository.findByStatus(Post.postStatus.ACTIVE, pageable);
+                break;
+            case 3:
+                // Find posts by the current user
+                postPage = postRepository.findByAccountId(form.getIdUser(), pageable);
+                break;
+            case 4:
+                // Find posts saved by the current user
+                postPage = postRepository.findByFavoritePostsAccountId(form.getIdUser(), pageable);
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid type: " + form.getType());
+        }
+
 
         return postPage.map(post -> {
-            PostDTO postDTO = modelMapper.map(post, PostDTO.class) ;
+            PostDTO postDTO = modelMapper.map(post, PostDTO.class);
 
             postDTO.setAccountId(post.getAccount().getId());
             postDTO.setFullName(post.getAccount().getFullName());
@@ -66,32 +93,32 @@ public class PostService implements IPostService {
             postDTO.setComments(post.getComments().stream()
                     .filter(comment -> comment.getCommentParent() == null)
                     .map(comment -> {
-                CommentDTO commentDTO = modelMapper.map(comment, CommentDTO.class);
+                        CommentDTO commentDTO = modelMapper.map(comment, CommentDTO.class);
 
-                // Recursively map child comments to CommentDTOs
-                if (comment.getChildComments() != null && !comment.getChildComments().isEmpty()) {
-                    List<CommentDTO> childCommentDTOs = comment.getChildComments().stream()
-                            .map(commentchild ->  {
-                                CommentDTO commentchilddto =   modelMapper.map(commentchild, CommentDTO.class);
-                                commentchilddto.setParentCommentId(commentchild.getCommentParent().getId());
-                                commentchilddto.setParentCommentId(comment.getPost().getId());
-                                commentchilddto.setAccountId(commentchild.getAccount().getId());
-                                commentchilddto.setFullName(commentchild.getAccount().getFullName());
-                                return commentchilddto ;
-                            })
-                            .collect(Collectors.toList());
-                    commentDTO.setChildComments(childCommentDTOs);
-                }
+                        // Recursively map child comments to CommentDTOs
+                        if (comment.getChildComments() != null && !comment.getChildComments().isEmpty()) {
+                            List<CommentDTO> childCommentDTOs = comment.getChildComments().stream()
+                                    .map(commentchild -> {
+                                        CommentDTO commentchilddto = modelMapper.map(commentchild, CommentDTO.class);
+                                        commentchilddto.setParentCommentId(commentchild.getCommentParent().getId());
+                                        commentchilddto.setParentCommentId(comment.getPost().getId());
+                                        commentchilddto.setAccountId(commentchild.getAccount().getId());
+                                        commentchilddto.setFullName(commentchild.getAccount().getFullName());
+                                        return commentchilddto;
+                                    })
+                                    .collect(Collectors.toList());
+                            commentDTO.setChildComments(childCommentDTOs);
+                        }
 //            else commentDTO.setChildComments(new ArrayList<CommentDTO>());
-                // Set post ID if available
-                if (comment.getPost() != null) {
-                    commentDTO.setPostId(comment.getPost().getId());
-                }
-                commentDTO.setAccountId(comment.getAccount().getId());
-                commentDTO.setFullName(comment.getAccount().getFullName());
-                return commentDTO;
-            }).toList());
-            return  postDTO ;
+                        // Set post ID if available
+                        if (comment.getPost() != null) {
+                            commentDTO.setPostId(comment.getPost().getId());
+                        }
+                        commentDTO.setAccountId(comment.getAccount().getId());
+                        commentDTO.setFullName(comment.getAccount().getFullName());
+                        return commentDTO;
+                    }).toList());
+            return postDTO;
         });
     }
 

@@ -2,6 +2,7 @@ package com.vti.be.controller;
 
 
 import com.vti.be.dto.PostDTO;
+import com.vti.be.form.PostFilterForm;
 import com.vti.be.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,13 +24,14 @@ public class PostController {
 
     @GetMapping
     public ResponseEntity<Page<PostDTO>> getAllPosts(
+            PostFilterForm form,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "createdAt") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDir) {
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
         Pageable pageable = PageRequest.of(page, size, sort);
-        Page<PostDTO> posts = postService.getAllPosts(pageable);
+        Page<PostDTO> posts = postService.getAllPosts( form,pageable);
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 
