@@ -32,11 +32,11 @@ public class Course {
     private String imageUrl;
 
     @CreationTimestamp
-    private LocalDateTime createdAt ;
+    private LocalDateTime createdAt;
 
     @UpdateTimestamp
-    private LocalDateTime updatedAt ;
+    private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "course")
-    private List<Lesson> lessons ;
+    private List<Lesson> lessons;
 }

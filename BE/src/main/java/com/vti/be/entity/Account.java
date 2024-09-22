@@ -10,27 +10,28 @@ import java.util.List;
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id ;
+    private Integer id;
 
     private String fullName;
 
-    private String email ;
+    private String email;
 
-    private String password ;
+    private String password;
 
-    private Role role ;
+    private Role role;
 
-    private String avatarLink ;
+    private String avatarLink;
 
     public enum Role {
         ADMIN,
         MANAGER,
         USER
     }
+
     private String status;
 
     @OneToMany(mappedBy = "account")
-    private List<Post> posts ;
+    private List<Post> posts;
 
     @OneToMany(mappedBy = "account")
     private List<FavoritePost> favoritePosts;
@@ -39,7 +40,7 @@ public class Account {
     private List<CartItem> cartItems;
 
     @OneToMany(mappedBy = "account")
-    private List<Order> orders ;
+    private List<Order> orders;
 
     @OneToMany(mappedBy = "account")
     private List<Comment> comments;
@@ -47,4 +48,6 @@ public class Account {
     @OneToMany(mappedBy = "account")
     private List<UserExamAttempt> userExamAttempts;
 
+    @OneToMany(mappedBy = "account")
+    private List<RegistrationInfo> registrationInfos;
 }
