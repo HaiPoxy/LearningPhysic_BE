@@ -27,14 +27,14 @@ public class Comment {
     private List<Comment> childComments = new ArrayList<>();
 
     @CreationTimestamp
-    private LocalDateTime createdAt ;
+    private LocalDateTime createdAt;
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
     @ManyToOne
     @JoinColumn(name = "post_id" , referencedColumnName = "id")
-    private Post post ;
+    private Post post;
 
     private String status;
 

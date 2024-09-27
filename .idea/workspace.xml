@@ -1,42 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="2fc0cf5f-7267-49e9-9104-37e2262665d6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/BE/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BE/mvnw" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BE/mvnw.cmd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BE/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/BeApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/configuration/ModelMapperConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/configuration/security/JwtAuthenticationFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/configuration/security/JwtHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/configuration/security/JwtLoginFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/configuration/security/SecurityConfiguration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/controller/AccountController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/controller/AuthController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/dto/AccountDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/entity/Account.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/entity/ChangePasswordRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/form/AccountCreateForm.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/form/AccountFilterForm.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/form/AuthRegisterForm.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/form/ChangePasswordForm.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/repository/IAccountRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/repository/IAuthRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/repository/IChangePasswordRequestRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/service/AccountService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/service/AuthService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/service/IAccountService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/service/IAuthService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/specification/AccountSpecification.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/validation/AccountIdExist.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/validation/AccountIdExistValidator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/validation/EmailNotExist.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BE/src/main/java/com/vti/be/validation/EmailNotExistValidator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BE/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BE/src/test/java/com/vti/be/BeApplicationTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/BE.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/BE.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -45,10 +14,13 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/BE" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="DEPENDENCY_CHECKER_PROBLEMS_TAB" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
@@ -58,16 +30,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "<unknown>",
-    "last_opened_file_path": "/Users/ast/Documents/VTI/team3/project/BE",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/LecturePage/LearningPhysic_BE&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;terminal&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -84,5 +60,9 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

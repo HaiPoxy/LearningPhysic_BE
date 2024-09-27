@@ -8,29 +8,33 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Exercise {
-
+    @Column(name = "exercise_id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "exercise_id")
     private Integer exerciseId;
+
+    @Column(name = "exercise_name")
+    private String exerciseName;
 
     @ManyToOne
     @JoinColumn(name = "lesson_id", nullable = false)
     private Lesson lesson;
 
-    private String question;
+//    @OneToMany(mappedBy = "exercise")
+//    private List<Question> questions;
 
-    private String answer;
-
+    @Column(name = "created_at")
     @CreationTimestamp
     private LocalDateTime createdAt;
 
+    @Column(name = "updated_at")
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 }

@@ -17,24 +17,38 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Question {
-
+    @Column(name = "question_id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer questionId;
 
-    @ManyToOne
-    @JoinColumn(name = "exam_id", nullable = false)
-    private Exam exam;
+    @Column(name = "question_name")
+    private String questionName;
 
-    private String question;
+    @Column(name = "option_a")
+    private String optionA;
 
-    private String options; // Store JSON as a String
+    @Column(name = "option_b")
+    private String optionB;
 
+    @Column(name = "option_c")
+    private String optionC;
+
+    @Column(name = "option_d")
+    private String optionD;
+
+    @Column(name = "correct_answer")
     private String correctAnswer;
 
+    @Column(name = "created_at")
     @CreationTimestamp
     private LocalDateTime createdAt;
 
+    @Column(name = "updated_at")
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    @ManyToOne
+    @JoinColumn(name = "exercise_id")
+    private Exercise exercise;
 }

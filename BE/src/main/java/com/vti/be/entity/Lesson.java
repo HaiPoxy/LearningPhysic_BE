@@ -15,14 +15,15 @@ import java.util.List;
  */
 @Entity
 @Data
+@NoArgsConstructor
 public class Lesson {
-
+    @Column(name = "lesson_id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "course_id", referencedColumnName = "id")
+    @JoinColumn(name = "course_id", referencedColumnName = "course_id")
     private Course course;
 
     @OneToMany(mappedBy = "lesson")
@@ -32,13 +33,17 @@ public class Lesson {
     @OneToMany(mappedBy = "lesson")
     private List<Theory> theories;
 
+    @Column(name = "chapter_name")
     private String chapterName;
 
+    @Column(name = "lesson_name")
     private String lessonName;
 
+    @Column(name = "created_at")
     @CreationTimestamp
     private LocalDateTime createdAt ;
 
+    @Column(name = "updated_at")
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
